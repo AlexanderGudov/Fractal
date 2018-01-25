@@ -4,13 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/Fractal.cpp 
+../src/Bitmap.cpp \
+../src/main.cpp 
 
 OBJS += \
-./src/Fractal.o 
+./src/Bitmap.o \
+./src/main.o 
 
 CPP_DEPS += \
-./src/Fractal.d 
+./src/Bitmap.d \
+./src/main.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
