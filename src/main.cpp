@@ -15,10 +15,34 @@
 //============================================================================
 
 #include <iostream>
+#include "Bitmap.h"
 #include "BitmapFileHeader.h"
 #include "BitMapInfoHeader.h"
 
+using namespace mandelbrot;
+
 int main() {
 
+	int const WIDTH  = 1920;
+	int const HEIGHT = 1080;
+
+//	std::cout << "Size of BitmapFileHeader: " << sizeof(BitmapFileHeader) << " bytes."<< std::endl;
+//	std::cout << "Size of BitMapInfoHeader: " << sizeof(BitMapInfoHeader) << " bytes."<< std::endl;
+	Bitmap bitmap(1920, 1080);
+	for(int y = 0; y < HEIGHT; y++) {
+		for(int x = 0; x < WIDTH; x++) {
+			if(y < HEIGHT/3) {
+				bitmap.setPixel(x, y,  0xFF,  0x00,  0x00);
+			} else if (y < 2*HEIGHT/3) {
+				bitmap.setPixel(x, y,  0x00,  0x00,  0xFF);
+			} else if (y < HEIGHT) {
+				bitmap.setPixel(x, y,  0xFF,  0xFF,  0xFF);
+			}
+		}
+	}
+
+	bitmap.write("test.bmp");
+
+	std::cout << "Finished." << std::endl;
 	return 0;
 }
