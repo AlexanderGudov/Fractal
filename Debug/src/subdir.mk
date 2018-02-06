@@ -5,14 +5,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../src/Bitmap.cpp \
+../src/Mandelbrot.cpp \
 ../src/main.cpp 
 
 OBJS += \
 ./src/Bitmap.o \
+./src/Mandelbrot.o \
 ./src/main.o 
 
 CPP_DEPS += \
 ./src/Bitmap.d \
+./src/Mandelbrot.d \
 ./src/main.d 
 
 
