@@ -998,6 +998,5 @@ histogram[996] = 0
 histogram[997] = 0
 histogram[998] = 0
 histogram[999] = 0
-histogram[1000] = 440593
 The total number of pixels in image equals to 2073600
-total_pixels = 2073600(calculated by summing up).
+total_pixels = 1633007(calculated by summing up).

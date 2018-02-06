@@ -41,12 +41,13 @@ int main() {
 
 	unsigned int total_pixels{0};
 
-	std::unique_ptr< int [] > histogram( new int[Mandelbrot::MAX_ITERATIONS + 1]{0});
+	std::unique_ptr< int [] > histogram( new int[Mandelbrot::MAX_ITERATIONS]{0});
 
 	std::string fileName("table.txt");
 
 //	std::cout << "Size of BitmapFileHeader: " << sizeof(BitmapFileHeader) << " bytes."<< std::endl;
 //	std::cout << "Size of BitMapInfoHeader: " << sizeof(BitMapInfoHeader) << " bytes."<< std::endl;
+
 	Bitmap bitmap(1920, 1080);
 
 	std::ofstream ofs(fileName, std::ios::out);
@@ -65,8 +66,10 @@ int main() {
 			double yFractal = (y - HEIGHT/2 ) * 2.0/HEIGHT;
 
 			int iterations = Mandelbrot::getIterations(xFractal, yFractal);
+			if(iterations != Mandelbrot::MAX_ITERATIONS) {
+				histogram[iterations]++;
+			}
 
-			histogram[iterations]++;
 			uint8_t color = (uint8_t)(256 * (double)iterations / Mandelbrot::MAX_ITERATIONS);
 			color = color * color * color;
 /*
@@ -87,7 +90,7 @@ int main() {
 		}
 	}
 
-	for(unsigned int i = 0; i < Mandelbrot::MAX_ITERATIONS + 1; i++) {
+	for(unsigned int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++) {
 		total_pixels += histogram[i];
 		ofs << "histogram[" << i << "] = " << histogram[i] << std::endl;
 	}
