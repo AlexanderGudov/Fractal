@@ -10,7 +10,8 @@ local.properties
 .loadpath
 .recommenders
 Debug/Fractal
-
+test.bmp
+table.txt
 
 # External tool builders
 .externalToolBuilders/
