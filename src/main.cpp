@@ -32,21 +32,16 @@ int main() {
 
 	double xMin{999999.0 };
 	double xMax{-999999.0};
-
 	double yMin{999999.0 };
 	double yMax{-999999.0};
-
 	double min{999999.0 };
 	double max{-999999.0};
-
 	unsigned int total_pixels{0};
 
 	std::unique_ptr< int [] > histogram( new int[Mandelbrot::MAX_ITERATIONS]{0});
+	std::unique_ptr< int [] > iterNumPerPixel( new int[WIDTH * HEIGHT]{0});
 
 	std::string fileName("table.txt");
-
-//	std::cout << "Size of BitmapFileHeader: " << sizeof(BitmapFileHeader) << " bytes."<< std::endl;
-//	std::cout << "Size of BitMapInfoHeader: " << sizeof(BitMapInfoHeader) << " bytes."<< std::endl;
 
 	Bitmap bitmap(1920, 1080);
 
@@ -55,28 +50,22 @@ int main() {
 		std::cout << "Failure while opening the file: " << fileName << "." << std::endl;
 	}
 
-/*	ofs << std::setw(10) << "xFractal" << std::setw (10) << ""\
-					<< "yFractal" << std::setw (10) << ""\
-					<< "NumOfIterations" << std::setw (20) << ""\
-					<< "ColorNumber" << std::endl;*/
-
 	for(int y = 0; y < HEIGHT; y++) {
 		for(int x = 0; x < WIDTH; x++) {
 			double xFractal = (x - 5*WIDTH/8) * 2.0/HEIGHT;
 			double yFractal = (y - HEIGHT/2 ) * 2.0/HEIGHT;
 
 			int iterations = Mandelbrot::getIterations(xFractal, yFractal);
+
+			iterNumPerPixel[y*WIDTH + x] = iterations;
+
 			if(iterations != Mandelbrot::MAX_ITERATIONS) {
 				histogram[iterations]++;
 			}
 
 			uint8_t color = (uint8_t)(256 * (double)iterations / Mandelbrot::MAX_ITERATIONS);
 			color = color * color * color;
-/*
-			ofs << std::setw(10)  << std::left << xFractal << std::setw (10) << ""\
-							<< std::left << yFractal << std::setw (10) << ""\
-							<< std::left << iterations << std::setw (10) << ""\
-							<< std::left << static_cast<int>(red) << std::endl;*/
+
 			bitmap.setPixel(x, y, 0, color, 0);
 
 
@@ -93,6 +82,13 @@ int main() {
 	for(unsigned int i = 0; i < Mandelbrot::MAX_ITERATIONS; i++) {
 		total_pixels += histogram[i];
 		ofs << "histogram[" << i << "] = " << histogram[i] << std::endl;
+	}
+
+	ofs << std::endl << std::endl << std::endl;
+
+
+	for(unsigned int i = 0; i < HEIGHT * WIDTH; i++) {
+		ofs << "iterNumPerPixel[" << i << "] = " << iterNumPerPixel[i] << std::endl;
 	}
 
 	ofs << "The total number of pixels in image equals to " <<  WIDTH * HEIGHT << std::endl;
