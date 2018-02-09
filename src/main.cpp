@@ -37,6 +37,8 @@ int main() {
 	double min{999999.0 };
 	double max{-999999.0};
 	unsigned int total_pixels{0};
+	unsigned int total_iterations{0};
+	int totalIters;
 
 	std::unique_ptr< int [] > histogram( new int[Mandelbrot::MAX_ITERATIONS]{0});
 	std::unique_ptr< int [] > iterNumPerPixel( new int[WIDTH * HEIGHT]{0});
@@ -85,7 +87,6 @@ int main() {
 	}
 
 	ofs << std::endl << std::endl << std::endl;
-
 
 	for(unsigned int i = 0; i < HEIGHT * WIDTH; i++) {
 		ofs << "iterNumPerPixel[" << i << "] = " << iterNumPerPixel[i] << std::endl;
