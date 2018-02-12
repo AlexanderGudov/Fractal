@@ -6,16 +6,19 @@
 CPP_SRCS += \
 ../src/Bitmap.cpp \
 ../src/Mandelbrot.cpp \
+../src/ZoomList.cpp \
 ../src/main.cpp 
 
 OBJS += \
 ./src/Bitmap.o \
 ./src/Mandelbrot.o \
+./src/ZoomList.o \
 ./src/main.o 
 
 CPP_DEPS += \
 ./src/Bitmap.d \
 ./src/Mandelbrot.d \
+./src/ZoomList.d \
 ./src/main.d 
 
 
