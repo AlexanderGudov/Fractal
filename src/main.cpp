@@ -25,7 +25,6 @@
 #include "BitmapFileHeader.h"
 #include "BitMapInfoHeader.h"
 #include "Mandelbrot.h"
-#include "Zoom.h"
 #include "ZoomList.h"
 
 using namespace mandelbrot;
@@ -50,7 +49,9 @@ int main() {
 	Bitmap bitmap(1920, 1080);
 	ZoomList zoomList(WIDTH, HEIGHT);
 
-	zoomList.add( Zoom(WIDTH/2, HEIGHT/2, 2.0/WIDTH) );
+	zoomList.add( Zoom(WIDTH/2, HEIGHT/2, 4.0/WIDTH) );
+//	zoomList.add( Zoom(820, HEIGHT - 230, 4.0/WIDTH) );
+
 
 	std::ofstream ofs(fileName, std::ios::out);
 	if(!ofs) {
@@ -59,26 +60,14 @@ int main() {
 
 	for(int y = 0; y < HEIGHT; y++) {
 		for(int x = 0; x < WIDTH; x++) {
-/*			double xFractal = (x - 5*WIDTH/8) * 2.0/HEIGHT;
-			double yFractal = (y - HEIGHT/2 ) * 2.0/HEIGHT;*/
-
-/*			double xFractal = (x - WIDTH/2  ) * 2.0/HEIGHT;
-			double yFractal = (y - HEIGHT/2 ) * 2.0/HEIGHT;*/
-
 			std::pair<double, double> coords = zoomList.rescale(x, y);
 
 			int iterations = Mandelbrot::getIterations(coords.first, coords.second);
-
 			iterNumPerPixel[y*WIDTH + x] = iterations;
 
 			if(iterations != Mandelbrot::MAX_ITERATIONS) {
 				histogram[iterations]++;
 			}
-
-/*			if( xFractal < xMin) {xMin= xFractal;}
-			if( xFractal > xMax) {xMax= xFractal;}
-			if( yFractal < yMin) {yMin = yFractal;}
-			if( yFractal > yMax) {yMax = yFractal;}*/
 
 			if( coords.first < xMin) {xMin= coords.first;}
 			if( coords.first > xMax) {xMax= coords.first;}

@@ -18,11 +18,11 @@ class ZoomList {
 private:
 	double m_xFractCenter{0};
 	double m_yFractCenter{0};
-	double m_totalScale{1.0};
+	double m_combinedScale{1.0};
 
 	int m_width{0};
 	int m_height{0};
-	std::vector<Zoom> zooms;
+	std::vector<Zoom> m_zooms;
 
 public:
 	ZoomList(int width, int height);
