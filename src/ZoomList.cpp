@@ -10,26 +10,25 @@
 
 namespace mandelbrot {
 
-ZoomList::ZoomList(int width, int height): m_width(width), m_height(height) {
-
-}
+ZoomList::ZoomList(int width, int height): m_width(width), m_height(height) {}
 
 
 void ZoomList::add(const Zoom& zoom) {
 	m_zooms.push_back(zoom);
 
-	m_xFractCenter += (zoom.x - m_width /2 ) * m_combinedScale;
-	m_yFractCenter += (zoom.y - m_height/2 ) * m_combinedScale;
+	m_xCenter = (zoom.x + m_xCenter) - m_width/2 ;
+	m_yCenter = (zoom.y + m_yCenter) - m_height/2;
 	m_combinedScale *= zoom.scale;
 
-	std::cout << "m_xFractCenter = " << m_xFractCenter << "; " << "m_yFractCenter = " << m_xFractCenter << "; " \
-			  << "m_combinedScale = " << m_combinedScale << std::endl;
+	std::cout << "m_xCenter = " << m_xCenter << "; "/
+			  << "m_yCenter = " << m_yCenter << "; " \
+			  << "m_scale = " << m_scale << std::endl;
 }
 
-std::pair<double, double> ZoomList::rescale(int x, int y) {
+std::pair<double, double> ZoomList::parallelTranslAndScaling(int x, int y) {
 
-	double xFractal = (x - m_width/2 ) * m_combinedScale + m_xFractCenter;
-	double yFractal = (y - m_height/2) * m_combinedScale + m_yFractCenter;
+	double xFractal = ( x + ( (-m_width/2 ) + m_xCenter ) ) * m_scale;
+	double yFractal = ( y + ( (-m_height/2) + m_yCenter ) ) * m_scale;
 
 	return std::pair<double, double>(xFractal, yFractal);
 }

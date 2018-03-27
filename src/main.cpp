@@ -60,7 +60,7 @@ int main() {
 
 	for(int y = 0; y < HEIGHT; y++) {
 		for(int x = 0; x < WIDTH; x++) {
-			std::pair<double, double> coords = zoomList.rescale(x, y);
+			std::pair<double, double> coords = zoomList.parallelTransAndScaling(x,y);
 
 			int iterations = Mandelbrot::getIterations(coords.first, coords.second);
 			iterNumPerPixel[y*WIDTH + x] = iterations;
